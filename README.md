@@ -1,5 +1,5 @@
 # router-ex
-Provide an easy implementation of multithreading in node
+Implements controllers for express
 ## Installation
 
 ```
