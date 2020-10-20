@@ -7,12 +7,18 @@ $ npm install router-ex --save
 ```
 
 
-## Usage
+## Documentation
 
 ### Controllers
-To define a controller simply create a class extend `Controller` from `router-ex` module.
+Controllers are a cleaner way to handle your requests and avoid a file full of clousure.
+
+To define a controller you need to extend the `Controller` class found in the package. The `Controller` class provides functions to help to respond text, files and errors.
+
+All the actions must be declared as a public function and they receive two parameters: request and response.
+
 
 ```ts
+// file: /Controllers/IndexController
 import { Controller } from 'router-ex';
 import { Request, Response } from 'express';
 export default class IndexController extends Controller {
@@ -34,17 +40,26 @@ export default class IndexController extends Controller {
 }
 ```
 
-### Routing
-The routes are defined by the `Router` class.
+### Router
+
+Parameters
+- [app] Express application
+- [options]
+    - *baseUrl:string* base url path for the actions
+    - *middlewares:array< middleware >* Middlewares to be applied in the route.  
 
 ```ts
+// file: App.ts
 import { Router } from 'router-ex';
+import IndexController from './Controllers/IndexController';
 import express from 'express';
 
 const app = express();
 const port = 3000;
 
-const router = new Router(app);
+const router = new Router(app, {
+    baseUrl: '/api/'
+});
 
 router.get('/index', [IndexController, 'index']).middleware(
     (request: Request, response: Response, next: NextFunction)=>{
