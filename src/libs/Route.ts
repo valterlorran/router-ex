@@ -35,7 +35,7 @@ export default class Route {
 
     private register() {
         this.router.expressRouter[this.method](this.path, this.startRoute.bind(this));
-        this.record = this.router.expressRouter._router.stack[this.router.expressRouter._router.stack.length - 1]
+        this.record = this.router.expressRouter.stack[this.router.expressRouter.stack.length - 1]
     }
 
     private async startRoute(request: Request, response: Response) {
