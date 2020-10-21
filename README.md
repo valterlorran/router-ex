@@ -76,3 +76,31 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
 ```
+
+
+### Middleware Classes
+
+If you want to avoid writing closures for the middlewares, you can use the middleware service to register middleware classes.
+
+```ts
+import { NextFunction, Response, Request } from "express";
+import { IMiddleware, MiddlewareService } from "router-ex";
+
+class MyMiddleware implements IMiddleware {
+    public handler(request: Request, response: Response, next: NextFunction) {
+        console.log('shit');
+        return next();
+    }
+}
+
+MiddlewareService.register('my-middleware', new MyMiddleware);
+```
+
+Then you can use it in your router:
+
+```ts
+[...]
+import 'Http/Middlewares/MyMiddleware'
+
+router.get('/index', [IndexController, 'index']).middleware('my-middleware');
+```
