@@ -2,9 +2,11 @@ import { Action } from './Router';
 import Router from './Router';
 import { Request, Response } from 'express';
 import { Controller } from 'index';
+import { stringify } from 'querystring';
+import MiddlewareService from './MiddlewareService';
 
 export default class Route {
-    public middlewares: Array<CallableFunction> = [];
+    public middlewares: Array<Function> = [];
 
     public method: string;
     public path: string;
@@ -21,12 +23,22 @@ export default class Route {
         this.register();
     }
 
-    public middleware(...middlewares: CallableFunction[]) {
-        middlewares.reverse().forEach((middleware: CallableFunction) => {
-            this.middlewares.push(middleware);
+    public middleware(...middlewares: Array<Function| string>) {
+        middlewares.reverse().forEach((middleware: Function | string) => {
+            let _callback;
+            if (middleware.constructor === String) {
+                _callback = MiddlewareService.get(middleware);
+                this.middlewares.push(_callback);
+            } else if(middleware.constructor === Function) {
+                _callback = middleware;
+                this.middlewares.push(middleware as Function)
+            } else {
+                throw Error(`The type "${middleware.constructor.name}" is not a valid parameter`);
+            }
+
             let layer = this.record.route.stack[0];
 
-            let newLayer = new layer.constructor('/', {}, middleware);
+            let newLayer = new layer.constructor('/', {}, _callback);
             this.record.route.stack.unshift(newLayer);
         });
 
