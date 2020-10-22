@@ -88,7 +88,6 @@ import { IMiddleware, MiddlewareService } from "router-ex";
 
 class MyMiddleware implements IMiddleware {
     public handler(request: Request, response: Response, next: NextFunction) {
-        console.log('shit');
         return next();
     }
 }
