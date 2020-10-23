@@ -5,6 +5,7 @@ export default class MiddlewareService {
 
     public static register(name: string, middleware: IMiddleware) {
         this.middlewares[name] = middleware;
+        return this;
     }
 
     public static get(name: string): CallableFunction {

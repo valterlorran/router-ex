@@ -1,8 +1,9 @@
 
 import { Router } from "../src/index";
 
-import express, {NextFunction, Request, Response} from "express";
+import { NextFunction, Request, Response } from "../src/index";
 import IndexController from './IndexController';
+import express from 'express';
 
 const app = express();
 const port = 3000;

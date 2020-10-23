@@ -19,8 +19,7 @@ All the actions must be declared as a public function and they receive two param
 
 ```ts
 // file: /Controllers/IndexController
-import { Controller } from 'router-ex';
-import { Request, Response } from 'express';
+import { Controller, Request, Response } from 'router-ex';
 export default class IndexController extends Controller {
 
     /** Returns a simple text response */
@@ -50,7 +49,7 @@ Parameters
 
 ```ts
 // file: App.ts
-import { Router } from 'router-ex';
+import { Router, Request, Response, NextFunction } from 'router-ex';
 import IndexController from './Controllers/IndexController';
 import express from 'express';
 
@@ -83,8 +82,7 @@ app.listen(port, () => {
 If you want to avoid writing closures for the middlewares, you can use the middleware service to register middleware classes.
 
 ```ts
-import { NextFunction, Response, Request } from "express";
-import { IMiddleware, MiddlewareService } from "router-ex";
+import { IMiddleware, MiddlewareService, NextFunction, Response, Request } from "router-ex";
 
 class MyMiddleware implements IMiddleware {
     public handler(request: Request, response: Response, next: NextFunction) {
