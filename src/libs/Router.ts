@@ -51,7 +51,7 @@ export default class Router {
         } 
         // @ts-ignore
         if (controller.prototype.store) {
-            routes.push(this.addRoute('post', `${path}/:id`, [controller, 'store']));
+            routes.push(this.addRoute('post', `${path}`, [controller, 'store']));
         } 
         // @ts-ignore
         if (controller.prototype.update) {
