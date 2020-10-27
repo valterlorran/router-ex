@@ -49,4 +49,16 @@ export default class Router {
     public get(path: string, action: Action) {
         return this.addRoute('get', path, action);
     }
+
+    public put(path: string, action: Action) {
+        return this.addRoute('put', path, action);
+    }
+
+    public patch(path: string, action: Action) {
+        return this.addRoute('patch', path, action);
+    }
+
+    public delete(path: string, action: Action) {
+        return this.addRoute('delete', path, action);
+    }
 }
