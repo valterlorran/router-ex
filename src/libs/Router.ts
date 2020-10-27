@@ -42,6 +42,33 @@ export default class Router {
         return route;
     }
 
+    public resource(path: string, controller: typeof Controller) {
+        const routes: Array<Route> = []
+
+        // @ts-ignore
+        if (controller.prototype.index) {
+            routes.push(this.addRoute('get', `${path}`, [controller, 'index']));
+        } 
+        // @ts-ignore
+        if (controller.prototype.store) {
+            routes.push(this.addRoute('post', `${path}/:id`, [controller, 'store']));
+        } 
+        // @ts-ignore
+        if (controller.prototype.update) {
+            routes.push(this.addRoute('put', `${path}/:id`, [controller, 'update']));
+        } 
+        // @ts-ignore
+        if (controller.prototype.destroy) {
+            routes.push(this.addRoute('delete', `${path}/:id`, [controller, 'destroy']));
+        } 
+        // @ts-ignore
+        if (controller.prototype.show) {
+            routes.push(this.addRoute('get', `${path}/:id`, [controller, 'show']));
+        }
+
+        return routes;
+    }
+
     public post(path: string, action: Action) {
         return this.addRoute('post', path, action);
     }
