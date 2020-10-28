@@ -39,6 +39,7 @@ export default class IndexController extends Controller {
 }
 ```
 
+
 ### Router
 
 Parameters
@@ -74,6 +75,38 @@ router.get('/error', [IndexController, 'error']);
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+```
+
+### Resource Controllers
+
+Easily create CRUD routes using the `resource` method. The following route declaration create several routes to handle a resource.
+
+```ts
+// routes.ts
+
+router.resource('/dogs', DogsController);
+```
+Generated routes:
+
+| HTTP METHOD | URI       | ACTION |
+|-------------|-----------|--------|
+| GET         | /dogs     | index  |
+| POST        | /dogs     | store  |
+| GET         | /dogs/:id | show   |
+| PUT         | /dogs/:id | update |
+| DELETE      | /dogs/:id | destroy|
+
+
+Resource controller example:
+```ts
+// DogsController.ts
+class DogsController extends Controller {
+    public index() {}
+    public store() {}
+    public show() {}
+    public update() {}
+    public destroy() {}
+}
 ```
 
 
