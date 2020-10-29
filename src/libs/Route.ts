@@ -5,6 +5,9 @@ import { Controller } from 'index';
 import { stringify } from 'querystring';
 import MiddlewareService from './MiddlewareService';
 
+/**
+ * Route class
+ */
 export default class Route {
     public middlewares: Array<Function> = [];
 
@@ -23,6 +26,11 @@ export default class Route {
         this.register();
     }
 
+    /**
+     * Registers a middleware on the route
+     * @param middlewares 
+     * @returns Route
+     */
     public middleware(...middlewares: Array<Function| string>) {
         middlewares.reverse().forEach((middleware: Function | string) => {
             let _callback;
@@ -45,11 +53,19 @@ export default class Route {
         return this;
     }
 
+    /**
+     * Creates and holds the current route in express
+     */
     private register() {
         this.router.expressRouter[this.method](this.path, this.startRoute.bind(this));
         this.record = this.router.expressRouter.stack[this.router.expressRouter.stack.length - 1]
     }
 
+    /**
+     * Runs every request call, this method is responsible for instanciating the controller
+     * @param request 
+     * @param response 
+     */
     private async startRoute(request: Request, response: Response) {
         const controller: typeof Controller = this.action[0];
         const method:string = this.action[1];
