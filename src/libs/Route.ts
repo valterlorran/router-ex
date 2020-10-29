@@ -79,7 +79,7 @@ export default class Route {
 
         const _controller: any = new controller(request, response);
         
-        _controller.app = Injection.inject(request, response);
+        _controller.app = Injection.$inject(request, response, this);
         
         let res = await _controller[method](request, response);
 

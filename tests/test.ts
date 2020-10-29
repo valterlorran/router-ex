@@ -6,6 +6,9 @@ import IndexController from './IndexController';
 import express from 'express';
 import TestController from "./TestController";
 import axios from "axios";
+import Injectable from "../src/libs/Injectable";
+import Route from "../src/libs/Route";
+import Injection from "../src/libs/Injection";
 
 const app = express();
 const port = 3000;
@@ -19,6 +22,25 @@ router.get('/index', [IndexController, 'index']).middleware(
         return next();
     }
 );
+
+
+class IndexInjectable implements Injectable {
+    name: string = "indexInj";
+    
+    canInject(request: Request, response: Response, route: Route): Boolean {
+        return true;
+    }
+
+    handle(request: Request, response: Response, route: Route): any {
+        return {
+            something: function(){
+                console.log("teste");
+            }
+        }
+    }
+}
+
+Injection.register(new IndexInjectable);
 
 app.listen(port, async () => {
     console.log(`Example app listening at http://localhost:${port}`);
