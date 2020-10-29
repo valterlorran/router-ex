@@ -1,8 +1,14 @@
 import { Request, Response } from 'express'
+import Injectable from './Injectable';
+
+interface Dictionary<T> {
+    [Key: string]: T;
+}
 
 export default class Controller {
     public request: Request;
     public response: Response;
+    public app: Dictionary<Injectable> = {}
 
     constructor(req: Request, res: Response) {
         this.request = req;

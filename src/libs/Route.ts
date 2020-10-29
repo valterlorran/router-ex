@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import { Controller } from 'index';
 import { stringify } from 'querystring';
 import MiddlewareService from './MiddlewareService';
+import Injection from './Injection';
 
 /**
  * Route class
@@ -16,6 +17,7 @@ export default class Route {
     public action: Action;
     public router: Router;
     public record: any;
+    public name: string | null = null;
 
     constructor(method: 'post' | 'get' | 'put' | 'patch' | 'delete', path: string, action: Action, router: Router) {
         this.method = method;
@@ -53,6 +55,11 @@ export default class Route {
         return this;
     }
 
+    public as(name: string) {
+        this.name = name;
+        return this;
+    }
+
     /**
      * Creates and holds the current route in express
      */
@@ -71,6 +78,8 @@ export default class Route {
         const method:string = this.action[1];
 
         const _controller: any = new controller(request, response);
+        
+        _controller.app = Injection.inject(request, response);
         
         let res = await _controller[method](request, response);
 

@@ -48,28 +48,22 @@ export default class Router {
      * @param controller Controller used for the resource
      */
     public resource(path: string, controller: typeof Controller) {
-        const routes: Array<Route> = []
+        const routes: Array<Route> = [];
+        const pathClear = path.replace(/^\/?|\/?$/, "").replace(/\//g, ".");
 
-        // @ts-ignore
-        if (controller.prototype.index) {
-            routes.push(this.addRoute('get', `${path}`, [controller, 'index']));
-        } 
-        // @ts-ignore
-        if (controller.prototype.store) {
-            routes.push(this.addRoute('post', `${path}`, [controller, 'store']));
-        } 
-        // @ts-ignore
-        if (controller.prototype.update) {
-            routes.push(this.addRoute('put', `${path}/:id`, [controller, 'update']));
-        } 
-        // @ts-ignore
-        if (controller.prototype.destroy) {
-            routes.push(this.addRoute('delete', `${path}/:id`, [controller, 'destroy']));
-        } 
-        // @ts-ignore
-        if (controller.prototype.show) {
-            routes.push(this.addRoute('get', `${path}/:id`, [controller, 'show']));
-        }
+        [
+            [`${path}`, 'get', 'index'],
+            [`${path}`, 'post', 'store'],
+            [`${path}/:id`, 'put', 'update'],
+            [`${path}/:id`, 'delete', 'destroy'],
+            [`${path}/:id`, 'get', 'show'],
+        ].forEach((def:any) => {
+            const [uri, method, action] = def;
+            if ((controller.prototype as any)[action]) {
+                let route = this.addRoute(method, uri, [controller, action]).as(`${pathClear}.${action}`);
+                routes.push(route);
+            }
+        })
 
         return routes;
     }
