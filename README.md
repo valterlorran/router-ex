@@ -88,13 +88,13 @@ router.resource('/dogs', DogsController);
 ```
 Generated routes:
 
-| HTTP METHOD | URI       | ACTION |
-|-------------|-----------|--------|
-| GET         | /dogs     | index  |
-| POST        | /dogs     | store  |
-| GET         | /dogs/:id | show   |
-| PUT         | /dogs/:id | update |
-| DELETE      | /dogs/:id | destroy|
+| HTTP METHOD | URI       | ACTION | ROUTE NAME  |
+|-------------|-----------|--------|-------------|
+| GET         | /dogs     | index  | dogs.index  |
+| POST        | /dogs     | store  | dogs.store  |
+| GET         | /dogs/:id | show   | dogs.show   |
+| PUT         | /dogs/:id | update | dogs.update |
+| DELETE      | /dogs/:id | destroy| dogs.destroy|
 
 
 Resource controller example:
@@ -133,4 +133,43 @@ Then you can use it in your router:
 import 'Http/Middlewares/MyMiddleware'
 
 router.get('/index', [IndexController, 'index']).middleware('my-middleware');
+```
+
+### Injections
+
+Injections helps to serve any kind of objects or data in your app.
+
+```ts
+import { Route, Request, Response, Injectable, Injection} from "router-ex";
+
+class IndexInjectable implements Injectable {
+    name: string = "indexInj";
+    
+    canInject(request: Request, response: Response, route: Route): Boolean {
+        return true;
+    }
+
+    handle(request: Request, response: Response, route: Route): any {
+        return {
+            something: function(){
+                console.log("I could be a repository!");
+            }
+        }
+    }
+}
+
+Injection.register(new IndexInjectable);
+```
+
+And then, in your controllers you could access your injection like this:
+```ts
+import { Controller } from '../src/index';
+export default class IndexController extends Controller {
+    public index() {
+        const { indexInj } = this.app;
+        indexInj.something();
+        
+        return 'Hello World!';
+    }
+}
 ```
