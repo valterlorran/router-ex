@@ -10,7 +10,7 @@ $ npm install router-ex --save
 ## Documentation
 
 ### Controllers
-Controllers are a cleaner way to handle your requests and avoid a file full of clousure.
+Controllers are a cleaner way to handle your requests and avoid a file full of closure.
 
 To define a controller you need to extend the `Controller` class found in the package. The `Controller` class provides functions to help to respond text, files and errors.
 
