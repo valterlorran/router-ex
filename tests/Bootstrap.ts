@@ -3,12 +3,12 @@ import { App } from "../src/index";
 import ConsoleServer from "./ConsoleServer";
 import HttpServer from "./HttpServer";
 
-const $app = new App();
+export const app = new App();
 
-$app.register(
+app.register(
     new HttpServer
 );
 
-$app.register(
+app.register(
     new ConsoleServer
 );
