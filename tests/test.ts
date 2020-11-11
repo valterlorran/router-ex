@@ -3,14 +3,12 @@ import { Router } from "../src/index";
 
 import { NextFunction, Request, Response } from "../src/index";
 import IndexController from './IndexController';
-import express from 'express';
 import TestController from "./TestController";
 import axios from "axios";
 import Injectable from "../src/libs/Injectable";
 import Route from "../src/libs/Route";
 import Injection from "../src/libs/Injection";
 
-const app = express();
 const port = 3000;
 
 const router = new Router(app);
