@@ -1,11 +1,6 @@
 
-import { app } from './Bootstrap';
-import { Router } from "../src/index";
 
-import { NextFunction, Request, Response } from "../src/index";
-import IndexController from './IndexController';
-import TestController from "./TestController";
-import axios from "axios";
+import { Request, Response } from "../src/index";
 import "./Bootstrap";
 import Injectable from "../src/libs/Injectable";
 import Route from "../src/libs/Route";
