@@ -3,6 +3,9 @@ import { App } from "../src/index";
 import ConsoleServer from "./ConsoleServer";
 import HttpServer from "./HttpServer";
 
+import fs from "fs";
+import path from "path";
+
 export const app = new App();
 
 app.register(
@@ -12,3 +15,7 @@ app.register(
 app.register(
     new ConsoleServer
 );
+
+app.registerRouteFile(path.join(__dirname, './Router'));
+
+app.start();
