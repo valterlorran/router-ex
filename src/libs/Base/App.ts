@@ -1,9 +1,17 @@
+import ServiceProvider from "libs/Providers/ServiceProvider";
 import { ConsoleApp } from "./ConsoleApp";
 import { HttpApp } from "./HttpApp";
 
 export class App {
     protected apps: Array<any> = [];
     protected routes: Array<string> = [];
+    protected providers: Array<ServiceProvider> = [];
+
+    public static app: App;
+
+    constructor(){
+        App.app = this;
+    }
 
     public register(app: any) {
         this.apps.push(app);
@@ -31,5 +39,15 @@ export class App {
 
     public registerRouteFile(file: string) {
         this.routes.push(file);
+    }
+
+    public registerProviders(providers: Array<typeof ServiceProvider>) {
+        providers.forEach((provider: typeof ServiceProvider) => {
+            let providerInstance = new provider(this);
+
+            providerInstance.boot();
+
+            this.providers.push(providerInstance);
+        });
     }
 }

@@ -35,24 +35,25 @@ export default class Route {
      */
     public middleware(...middlewares: Array<Function| string>) {
         middlewares.reverse().forEach((middleware: Function | string) => {
-            let _callback;
             if (middleware.constructor === String) {
-                _callback = MiddlewareService.get(middleware);
-                this.middlewares.push(_callback);
+                MiddlewareService.get(middleware).forEach((callback: CallableFunction) => {
+                    this.regiterMiddlware(callback)
+                })
             } else if(middleware.constructor === Function) {
-                _callback = middleware;
-                this.middlewares.push(middleware as Function)
+                this.regiterMiddlware(middleware as Function)
             } else {
                 throw Error(`The type "${middleware.constructor.name}" is not a valid parameter`);
             }
-
-            let layer = this.record.route.stack[0];
-
-            let newLayer = new layer.constructor('/', {}, _callback);
-            this.record.route.stack.unshift(newLayer);
         });
 
         return this;
+    }
+
+    private regiterMiddlware(middleware: CallableFunction) {
+        let layer = this.record.route.stack[0];
+
+        let newLayer = new layer.constructor('/', {}, middleware);
+        this.record.route.stack.unshift(newLayer);
     }
 
     public as(name: string) {

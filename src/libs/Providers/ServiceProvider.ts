@@ -6,4 +6,6 @@ export default class ServiceProvider {
     constructor(app: BaseApp) {
         this.app = app;
     }
+
+    public boot() {}
 }

@@ -1,6 +1,8 @@
 import Route from './Route';
 import Controller from './Controller';
 import { Router as ExpressRouter } from 'express';
+import { App } from './Base/App';
+import { MiddlewareService } from 'index';
 
 export interface Action {
     0: typeof Controller,
@@ -20,10 +22,10 @@ export default class Router {
 
     public routes: Array<Route> = [];
 
-    constructor(app: any, options: IRouterOptions = {}) {
+    constructor(options: IRouterOptions = {}) {
         this.options = options;
         this.expressRouter = ExpressRouter();
-        this.app = app;
+        this.app = App.app.getHttpServer().app;
 
         (this.options.middlewares || []).forEach((middleware: Function) => {
             this.expressRouter.use(middleware);
@@ -111,5 +113,13 @@ export default class Router {
      */
     public delete(path: string, action: Action) {
         return this.addRoute('delete', path, action);
+    }
+
+    public static group(fn: Function, middlewareGroup: string): Router {
+        const router = new Router({
+            middlewares: MiddlewareService.get(middlewareGroup)
+        });
+        fn(router);
+        return router;
     }
 }

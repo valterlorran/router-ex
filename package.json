@@ -7,6 +7,7 @@
   "scripts": {
     "test": "ts-node tests/test.ts",
     "prepublish": "tsc",
+    "watch": "tsc -w",
     "postinstall": "[ -d \"dist\" ] || tsc"
   },
   "repository": {
