@@ -13,4 +13,6 @@ export const Router = _Router;
 export const Controller = _Controller;
 export const MiddlewareService = _MiddlewareService;
 
+export { RouterServiceProvider } from './libs/Providers/Routes/RouterServiceProvider'
+
 export type { IMiddleware, Request, NextFunction, Response };
