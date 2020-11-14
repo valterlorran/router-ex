@@ -1,9 +1,9 @@
 import express, { Express } from "express";
 import { Dictionary } from "libs/types";
 import IMiddleware from "libs/Middleware";
-import { MiddlewareService } from "index";
 import BaseApp from "./BaseApp";
 import { RouterServiceProvider } from "libs/Providers/Routes/RouterServiceProvider";
+import MiddlewareService from "../MiddlewareService";
 
 export class HttpApp extends BaseApp {
     protected port: Number = 3000;

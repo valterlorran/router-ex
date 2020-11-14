@@ -2,7 +2,7 @@ import Route from './Route';
 import Controller from './Controller';
 import { Router as ExpressRouter } from 'express';
 import { App } from './Base/App';
-import { MiddlewareService } from 'index';
+import { MiddlewareService } from '../index';
 
 export interface Action {
     0: typeof Controller,

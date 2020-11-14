@@ -16,7 +16,7 @@ export default class MiddlewareService {
 
     public static get(name: string): Array<CallableFunction> {
         if (this.middlewaresGroups[name]) {
-            return this.middlewaresGroups[name].map((middleware: IMiddleware) => middleware.handler);
+            return this.middlewaresGroups[name].map((middleware: IMiddleware) => (new (middleware as any)).handler);
         }
         if (this.middlewares[name]) {
             return [this.middlewares[name].handler]
