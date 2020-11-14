@@ -28,6 +28,11 @@ export class HttpApp extends BaseApp {
             MiddlewareService.register(name, middleware)
         });
 
+        Object.keys(this.middlewareGroups).forEach((group: string) => {
+            const middlewareGroup = this.middlewareGroups[group];
+            MiddlewareService.group(group, middlewareGroup);
+        });
+
         this.app.listen(this.port, this.onStart.bind(this));
 
         return this.app;
