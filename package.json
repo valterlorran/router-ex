@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "ts-node tests/test.ts",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "postinstall": "[[ -d dist ]] || tsc"
   },
   "repository": {
     "type": "git",
