@@ -4,6 +4,8 @@ import IMiddleware from "libs/Middleware";
 import BaseApp from "./BaseApp";
 import { RouterServiceProvider } from "libs/Providers/Routes/RouterServiceProvider";
 import MiddlewareService from "../MiddlewareService";
+import { App } from "./App";
+import http from 'http';
 
 export class HttpApp extends BaseApp {
     protected port: Number = 3000;
@@ -13,6 +15,14 @@ export class HttpApp extends BaseApp {
     protected middlewareGroups: Dictionary<Array<IMiddleware>> = {};
 
     public app: Express = express();
+    public listener: any;
+    public server: any;
+
+    constructor() {
+        super();
+
+        this.server = http.createServer(this.app);
+    }
 
     protected onStart() {
         console.log(`default -> http://localhost:${this.port}`);
@@ -20,7 +30,7 @@ export class HttpApp extends BaseApp {
 
     public handler(): Express {
         this.middleware.forEach((middleware: IMiddleware) => {
-            this.app.use(middleware.handler);
+            this.app.use(( new (middleware as any)).handler);
         });
 
         Object.keys(this.routeMiddleware).forEach((name: string) => {
@@ -32,6 +42,8 @@ export class HttpApp extends BaseApp {
             const middlewareGroup = this.middlewareGroups[group];
             MiddlewareService.group(group, middlewareGroup);
         });
+
+        this.port = App.isClusterEnabled ? 0 : this.port;
 
         this.app.listen(this.port, this.onStart.bind(this));
 

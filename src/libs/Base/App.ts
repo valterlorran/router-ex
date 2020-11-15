@@ -8,6 +8,7 @@ export class App {
     protected providers: Array<ServiceProvider> = [];
 
     public static app: App;
+    public static isClusterEnabled: Boolean = true;
 
     constructor(){
         App.app = this;

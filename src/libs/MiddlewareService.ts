@@ -18,10 +18,11 @@ export default class MiddlewareService {
         if (this.middlewaresGroups[name]) {
             return this.middlewaresGroups[name].map((middleware: IMiddleware) => (new (middleware as any)).handler);
         }
+
         if (this.middlewares[name]) {
             return [this.middlewares[name].handler]
         }
         
-        throw Error(`The middleware with key "${name}" is not registered`);
+        return [];
     }
 }
