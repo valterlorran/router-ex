@@ -1,6 +1,7 @@
 import ServiceProvider from "libs/Providers/ServiceProvider";
 import { ConsoleApp } from "./ConsoleApp";
 import { HttpApp } from "./HttpApp";
+import { WsApp } from "./WsApp";
 
 export class App {
     protected apps: Array<any> = [];
@@ -24,6 +25,12 @@ export class App {
         });
     }
 
+    public getWsServer(): HttpApp {
+        return this.apps.find((app: any) => {
+            return app instanceof WsApp;
+        });
+    }
+
     public start() {
         for(let i in this.apps) {
             const app:ConsoleApp | HttpApp = this.apps[i];
@@ -34,6 +41,8 @@ export class App {
                 this.routes.forEach((path: string) => {
                     require(path).default(expressApp);
                 });
+            } else if(app instanceof WsApp) {
+                let expressApp = app.handler();
             }
         }
     }

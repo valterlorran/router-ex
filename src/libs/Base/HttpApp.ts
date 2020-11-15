@@ -18,8 +18,8 @@ export class HttpApp extends BaseApp {
     public listener: any;
     public server: any;
 
-    constructor() {
-        super();
+    constructor(app: App) {
+        super(app);
 
         this.server = http.createServer(this.app);
     }

@@ -6,8 +6,10 @@ import _MiddlewareService from './libs/MiddlewareService';
 export { App } from "./libs/Base/App";
 export { ConsoleApp } from "./libs/Base/ConsoleApp";
 export { HttpApp } from "./libs/Base/HttpApp";
+export { WsApp } from "./libs/Base/WsApp";
 
 import { Request, NextFunction, Response } from 'express'
+export { SocketController } from './libs/SocketController';
 
 export const Router = _Router;
 export const Controller = _Controller;

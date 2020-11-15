@@ -1,9 +1,9 @@
-import BaseApp from "libs/Base/BaseApp";
+import { App } from "libs/Base/App";
 
 export default class ServiceProvider {
-    protected app: BaseApp;
+    protected app: App;
 
-    constructor(app: BaseApp) {
+    constructor(app: App) {
         this.app = app;
     }
 
