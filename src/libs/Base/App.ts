@@ -36,14 +36,16 @@ export class App {
             const app:ConsoleApp | HttpApp = this.apps[i];
             if (process.env.IS_CONSOLE && app instanceof ConsoleApp ) {
                 app.handler();
-            } else if(app instanceof HttpApp) {
-                let expressApp = app.handler();
-                this.routes.forEach((path: string) => {
-                    require(path).default(expressApp);
-                });
-            } else if(app instanceof WsApp) {
-                let expressApp = app.handler();
-            }
+            } else if (!process.env.IS_CONSOLE) {
+                if (app instanceof HttpApp) {
+                    let expressApp = app.handler();
+                    this.routes.forEach((path: string) => {
+                        require(path).default(expressApp);
+                    });
+                } else if(app instanceof WsApp) {
+                    let expressApp = app.handler();
+                }
+            } 
         }
     }
 
