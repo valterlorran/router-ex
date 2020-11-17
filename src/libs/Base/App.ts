@@ -31,11 +31,11 @@ export class App {
         });
     }
 
-    public start() {
+    public async start() {
         for(let i in this.apps) {
             const app:ConsoleApp | HttpApp = this.apps[i];
             if (process.env.IS_CONSOLE && app instanceof ConsoleApp ) {
-                app.handler();
+                await app.handler();
             } else if (!process.env.IS_CONSOLE) {
                 if (app instanceof HttpApp) {
                     let expressApp = app.handler();

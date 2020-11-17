@@ -6,14 +6,37 @@ import { Dictionary } from "libs/types";
 import path from 'path';
 
 export class ConsoleApp extends BaseApp {
-    protected commands: Dictionary<typeof Command> = {};
+    private commands: Dictionary<typeof Command> = {};
+    protected registerCommands: Array<string> = [];
 
+    public async handler() {
+        await this.loadCommands();
 
-    public handler() {
-        this.registerCommands();
+        await this.runCommand();
     }
 
-    protected async load(folder: string) {
+    private async runCommand() {
+        const commandSignature = process.argv[2];
+
+        if (!commandSignature) {
+            return;
+        }
+        const commandClass = this.commands[commandSignature];
+        if (!commandClass) {
+            throw new Error(`Command "${commandSignature}" not found`);
+        }
+        
+        const command = new commandClass();
+        await command.handle();
+    }
+
+    private async loadCommands() {
+        for(var i in this.registerCommands) {
+            await this.load(this.registerCommands[i]);
+        }
+    }
+
+    private async load(folder: string) {
         const files:string[] = await readdirSync(folder);
 
         for (let index = 0; index < files.length; index++) {
@@ -32,9 +55,4 @@ export class ConsoleApp extends BaseApp {
      * Schedule commands
      */
     protected schedule() { }
-
-    /**
-     * Register the commands
-     */
-    protected registerCommands() { }
 }
