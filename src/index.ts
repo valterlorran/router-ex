@@ -7,6 +7,7 @@ export { App } from "./libs/Base/App";
 export { ConsoleApp } from "./libs/Base/ConsoleApp";
 export { HttpApp } from "./libs/Base/HttpApp";
 export { WsApp } from "./libs/Base/WsApp";
+export { Command } from "./libs/Base/Console/Command";
 
 import { Request, NextFunction, Response } from 'express'
 export { SocketController } from './libs/SocketController';

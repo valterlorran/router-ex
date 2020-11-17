@@ -1,7 +1,7 @@
 import BaseApp from "./BaseApp";
 
 import { readdirSync } from "fs";
-import Command from "./Console/Command";
+import { Command } from "./Console/Command";
 import { Dictionary } from "libs/types";
 
 export class ConsoleApp extends BaseApp {

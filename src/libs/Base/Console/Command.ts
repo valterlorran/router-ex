@@ -1,4 +1,4 @@
-export default class Command {
+export class Command {
     protected signature: string;
     protected description: string;
 
