@@ -1,30 +1,38 @@
+class Teste {
 
-
-import { Request, Response } from "../src/index";
-import "./Bootstrap";
-import Injectable from "../src/libs/Injectable";
-import Route from "../src/libs/Route";
-import Injection from "../src/libs/Injection";
-
-
-
-class IndexInjectable implements Injectable {
-    name: string = "indexInj";
-    
-    canInject(request: Request, response: Response, route: Route): Boolean {
-        return true;
-    }
-
-    handle(request: Request, response: Response, route: Route): any {
-        return {
-            something: function(){
-                console.log("teste");
-            }
-        }
-    }
 }
 
-Injection.register(new IndexInjectable);
+class Teste2 extends Teste {
+
+}
+
+console.log(Teste2.prototype instanceof Teste)
+
+// import { Request, Response } from "../src/index";
+// import "./Bootstrap";
+// import Injectable from "../src/libs/Injectable";
+// import Route from "../src/libs/Route";
+// import Injection from "../src/libs/Injection";
+
+
+
+// class IndexInjectable implements Injectable {
+//     name: string = "indexInj";
+    
+//     canInject(request: Request, response: Response, route: Route): Boolean {
+//         return true;
+//     }
+
+//     handle(request: Request, response: Response, route: Route): any {
+//         return {
+//             something: function(){
+//                 console.log("teste");
+//             }
+//         }
+//     }
+// }
+
+// Injection.register(new IndexInjectable);
 
 // app.listen(port, async () => {
 //     console.log(`Example app listening at http://localhost:${port}`);
