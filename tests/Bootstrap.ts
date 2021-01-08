@@ -7,11 +7,11 @@ import path from "path";
 export const app = new App();
 
 app.register(
-    new HttpServer
+    new HttpServer(app)
 );
 
 app.register(
-    new ConsoleServer
+    new ConsoleServer(app)
 );
 
 app.registerRouteFile(path.join(__dirname, './Router'));

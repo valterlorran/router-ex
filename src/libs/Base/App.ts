@@ -9,7 +9,7 @@ export class App {
     protected providers: Array<ServiceProvider> = [];
 
     public static app: App;
-    public static isClusterEnabled: Boolean = true;
+    public static isClusterEnabled: Boolean = false;
 
     constructor(){
         App.app = this;

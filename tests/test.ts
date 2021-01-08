@@ -1,15 +1,16 @@
-class Teste {
+// class Teste {
 
-}
+// }
 
-class Teste2 extends Teste {
+// class Teste2 extends Teste {
 
-}
+// }
 
-console.log(Teste2.prototype instanceof Teste)
+// console.log(Teste2.prototype instanceof Teste)
+
 
 // import { Request, Response } from "../src/index";
-// import "./Bootstrap";
+import "./Bootstrap";
 // import Injectable from "../src/libs/Injectable";
 // import Route from "../src/libs/Route";
 // import Injection from "../src/libs/Injection";
