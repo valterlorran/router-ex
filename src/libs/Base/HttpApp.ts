@@ -11,7 +11,7 @@ export class HttpApp extends BaseApp {
     protected port: Number = 3000;
     protected host: string = "0.0.0.0";
     protected routeMiddleware: Dictionary<IMiddleware> = {};
-    protected middleware: Array<IMiddleware> = [];
+    protected middleware: Array<IMiddleware|Function> = [];
     protected middlewareGroups: Dictionary<Array<IMiddleware>> = {};
 
     public app: Express = express();
@@ -32,8 +32,12 @@ export class HttpApp extends BaseApp {
     }
 
     public handler(): Express {
-        this.middleware.forEach((middleware: IMiddleware) => {
-            this.app.use(( new (middleware as any)).handler);
+        this.middleware.forEach((middleware: any) => {
+            if (typeof middleware == 'function') {
+                this.app.use(middleware);
+            } else {
+                this.app.use(( new (middleware as any)).handler);
+            }
         });
 
         Object.keys(this.routeMiddleware).forEach((name: string) => {
