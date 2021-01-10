@@ -3,7 +3,9 @@ import IndexController from "./IndexController";
 import TestController from "./TestController";
 
 export default (app:any) => {
-    const router = new Router(app);
+    const router = new Router({
+        middlewares: ['auth']
+    });
 
     router.resource('/test', TestController);
     

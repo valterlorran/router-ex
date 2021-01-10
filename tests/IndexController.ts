@@ -2,9 +2,9 @@ import { Controller } from '../src/index';
 export default class IndexController extends Controller {
 
     public index() {
-        const { indexInj } = this.app;
+        // const { indexInj } = this.app;
 
-        indexInj.something();
+        // indexInj.something();
         
         return 'Hello World!';
     }

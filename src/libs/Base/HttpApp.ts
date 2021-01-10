@@ -41,8 +41,8 @@ export class HttpApp extends BaseApp {
         });
 
         Object.keys(this.routeMiddleware).forEach((name: string) => {
-            const middleware = this.routeMiddleware[name];
-            MiddlewareService.register(name, middleware)
+            const middleware: any = this.routeMiddleware[name];
+            MiddlewareService.register(name, new middleware)
         });
 
         Object.keys(this.middlewareGroups).forEach((group: string) => {

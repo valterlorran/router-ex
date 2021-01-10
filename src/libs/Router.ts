@@ -10,7 +10,7 @@ export interface Action {
 }
 
 export interface IRouterOptions {
-    middlewares?: Array<Function>;
+    middlewares?: Array<Function|string>;
     baseUrl?: string;
 }
 
@@ -27,8 +27,15 @@ export default class Router {
         this.expressRouter = ExpressRouter();
         this.app = App.app.getHttpServer().app;
 
-        (this.options.middlewares || []).forEach((middleware: Function) => {
-            this.expressRouter.use(middleware);
+        (this.options.middlewares || []).forEach((middleware: Function|string) => {
+            if (middleware.constructor === String) {
+                console.log(MiddlewareService.get(middleware))
+                MiddlewareService.get(middleware).forEach((callback: CallableFunction) => {
+                    this.expressRouter.use(callback);
+                })
+            } else {
+                this.expressRouter.use(middleware);
+            }
         })
 
         this.app.use(this.options.baseUrl || '/', this.expressRouter);
