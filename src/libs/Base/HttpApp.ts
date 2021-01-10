@@ -18,9 +18,12 @@ export class HttpApp extends BaseApp {
     public listener: any;
     public server: any;
 
-    constructor(app: App) {
+    public options: any;
+
+    constructor(app: App, options: any = {}) {
         super(app);
 
+        this.options = options;
         this.server = http.createServer(this.app);
     }
 
@@ -45,7 +48,9 @@ export class HttpApp extends BaseApp {
 
         this.port = App.isClusterEnabled ? 0 : this.port;
 
-        this.app.listen(this.port, this.onStart.bind(this));
+        if (!this.options.skipListen) {
+            this.app.listen(this.port, this.onStart.bind(this));
+        }
 
         return this.app;
     }
